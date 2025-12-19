@@ -18,8 +18,11 @@ services:
       - /var/log:/var/log:ro
 
   health-api:
-    build: ./health-api
+    build:
+      context: ./health-api
     ports:
       - "8080:8080"
     environment:
       - SPRING_PROFILES_ACTIVE=default
+      - INSTANA_AGENT_HOST=instana-agent
+      - INSTANA_AGENT_PORT=42699
