@@ -1,0 +1,25 @@
+services:
+  instana-agent:
+    image: icr.io/instana/agent
+    privileged: true
+    pid: "host"
+    environment:
+      INSTANA_AGENT_ENDPOINT: ingress-magenta-saas.instana.rocks
+      INSTANA_AGENT_ENDPOINT_PORT: 443
+      INSTANA_AGENT_KEY: ${INSTANA_AGENT_KEY:-}
+      INSTANA_DOWNLOAD_KEY: ${INSTANA_DOWNLOAD_KEY:-}
+      INSTANA_AGENT_OPEN_TELEMETRY_GRPC_LISTEN_ADDRESS: 0.0.0.0
+      INSTANA_AGENT_OPEN_TELEMETRY_HTTP_LISTEN_ADDRESS: 0.0.0.0
+    volumes:
+      - /var/run:/var/run
+      - /run:/run
+      - /dev:/dev:ro
+      - /sys:/sys:ro
+      - /var/log:/var/log:ro
+
+  health-api:
+    build: ./health-api
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=default
