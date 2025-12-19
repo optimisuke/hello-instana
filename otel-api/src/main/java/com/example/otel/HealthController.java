@@ -7,8 +7,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 class HealthController {
 
-    @GetMapping("/health")
-    ResponseEntity<String> health() {
-        return ResponseEntity.ok("ok");
-    }
+  private static final java.util.logging.Logger log = java.util.logging.Logger.getLogger(
+    HealthController.class.getName()
+  );
+
+  @GetMapping("/health")
+  ResponseEntity<String> health() {
+    log.info("health endpoint called");
+    return ResponseEntity.ok("ok");
+  }
 }
